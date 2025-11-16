@@ -1,8 +1,17 @@
+import { Routes, Route } from "react-router"
+import Header from "./components/header/Header"
+import Home from "./components/home/Home"
+
 function App() {
 
   return (
     <>
-      <h1>My wedding</h1>
+      <Header />
+      <main>
+        <Routes>
+            <Route index element={<Home />}/>
+        </Routes>
+      </main>
     </>
   )
 }
