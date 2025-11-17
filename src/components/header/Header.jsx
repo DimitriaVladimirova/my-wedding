@@ -19,6 +19,7 @@ export default function Header() {
             <nav className="header__nav">
                 <Link className="nav-btn" to="/">Home</Link>
                 <Link className="nav-btn" to="/my-wedding">My Wedding</Link>
+                <Link className="nav-btn" to="/design">Design Choices</Link>
                 <Link className="nav-btn" to="/about">About</Link>
 
                 <div id="user" className="nav-group">
