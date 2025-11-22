@@ -1,13 +1,17 @@
 import { Link } from "react-router";
 
-export default function Header() {
+export default function Header({
+    user,
+}) {
 
+    console.log(user?.email);
+    
     return (
         <header className="header">
 
             <div className="header__left">
                 <img
-                  src="/images/logo.jpg" 
+                  src="/images/logo-designe.jpg" 
                   alt="My Wedding Logo"
                   className="header__logo"
                 />

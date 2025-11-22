@@ -1,0 +1,142 @@
+.auth-section {
+  min-height: calc(100vh - 90px - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+
+.auth-form {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 28px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(6px);
+
+  opacity: 0;
+  transform: translateY(20px);
+  animation: auth-fade-in-up 0.9s ease-out forwards;
+  animation-delay: 0.15s;
+}
+
+.auth-title {
+  margin-top: 0;
+  margin-bottom: 18px;
+  text-align: center;
+  font-family: "Playfair Display", serif;
+  font-size: 1.8rem;
+  color: rgb(163, 127, 10);
+
+  opacity: 0;
+  animation: auth-title-in 0.9s ease-out forwards;
+  animation-delay: 0.25s;
+}
+
+.auth-label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.auth-input {
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 1px solid #d1c5aa;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-sizing: border-box;
+}
+
+.auth-label,
+.auth-input {
+  opacity: 0;
+  animation: auth-field-fade 0.9s ease forwards;
+}
+
+.auth-label:nth-of-type(1) {
+  animation-delay: 0.35s;
+}
+
+.auth-label:nth-of-type(2) {
+  animation-delay: 0.45s;
+}
+
+.auth-label:nth-of-type(3) {
+  animation-delay: 0.55s;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #c09655;
+  box-shadow: 0 0 0 2px rgba(192, 150, 85, 0.2);
+}
+
+.auth-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: none;
+  background: linear-gradient(to right, #b28b46, #e3c081);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  opacity: 0;
+  animation: auth-field-fade 0.9s ease-out forwards;
+  animation-delay: 0.65s;
+}
+
+.auth-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+}
+
+.auth-error {
+  background-color: rgba(255, 77, 77, 0.12);
+  border: 1px solid rgba(255, 77, 77, 0.4);
+  color: #b30000;
+  padding: 8px 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+@keyframes auth-fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+
+@keyframes auth-title-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}
+
+@keyframes auth-field-fade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 0.9;
+        transform: translateY(0);
+    }
+}

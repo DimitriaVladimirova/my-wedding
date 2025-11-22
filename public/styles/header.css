@@ -31,7 +31,7 @@
   font-family: "Playfair Display", serif;
   font-size: 1.8rem;
   font-weight: 600;
-  color: #333;
+  color: rgb(163, 127, 10);
 }
 
 .header__title a {
@@ -53,7 +53,7 @@
 
   font-size: 0.95rem;
   font-family: "Segoe UI", system-ui, sans-serif;
-  color: #444;
+  color: rgb(118, 95, 18);
 
   background: transparent;
   transition: all 0.25s ease;
