@@ -1,0 +1,150 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router";
+import { getLocationById } from "../../services/design";
+
+export default function LocationDetails() {
+    const { locationId } = useParams();
+    const navigate = useNavigate();
+
+    // TODO: hook up to real auth later and FIX IMAGES
+    const isAuthenticated = true;
+    const isAdmin = true;
+
+    const [location, setLocation] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const [isChosen, setIsChosen] = useState(false);
+
+    useEffect(() => {
+        let cancelled = false;
+
+        async function loadLocation() {
+            try {
+                setLoading(true);
+                setError("");
+
+                const data = await getLocationById(locationId);
+                if (cancelled) return;
+
+                setLocation(data);
+            } catch (err) {
+                if (!cancelled) {
+                    console.error(err); 
+                    setError("Failed to load location.");
+                }
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        }
+
+        loadLocation();
+
+        return () => {
+            cancelled = true;
+        };
+    }, [locationId]);
+
+    const handleChoose = () => {
+        if (!isAuthenticated) return;
+        setIsChosen(true);
+        // later: save to /data/weddings
+    };
+
+    if (loading) {
+        return (
+            <main className="design-page">
+                <p className="design-intro">Loading location details…</p>
+            </main>
+        );
+    }
+
+    if (error || !location) {
+        return (
+            <main className="design-page">
+                <p className="design-intro" style={{ color: "darkred" }}>
+                    {error || "Location not found."}
+                </p>
+                <button
+                    className="design-secondary-btn"
+                    type="button"
+                    onClick={() => navigate(-1)}
+                >
+                    ← Back
+                </button>
+            </main>
+        );
+    }
+
+    return (
+        <main className="design-page location-details-page">
+            <button
+                className="design-secondary-btn"
+                type="button"
+                onClick={() => navigate(-1)}
+            >
+                ← Back to design choices
+            </button>
+
+            <section className="design-section location-details-section">
+                <div className="location-details-header">
+                    <h1 className="design-title">{location.title}</h1>
+                    <p className="design-intro">
+                        {location.city && location.country
+                            ? `${location.city}, ${location.country}`
+                            : null}
+                    </p>
+                </div>
+
+                <div className="location-details-content">
+                    <div className="location-main-image-wrap">
+                        <img
+                            src={location.imageUrl}
+                            alt={location.title}
+                            className="location-main-image"
+                        />
+                    </div>
+
+                    <div className="location-text-block">
+                        <p className="details-text">
+                            {location.summaryLong ||
+                                location.summary ||
+                                location.summaryShort}
+                        </p>
+
+                        {isAuthenticated && (
+                            <button
+                                className="design-primary-btn"
+                                type="button"
+                                onClick={handleChoose}
+                            >
+                                {isChosen ? "Location selected" : "Choose this location"}
+                            </button>
+                        )}
+
+                        {isAdmin && (
+                            <div className="details-admin-actions">
+                                <button className="design-secondary-btn" type="button">
+                                    Edit
+                                </button>
+                                <button className="design-danger-btn" type="button">
+                                    Delete
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {Array.isArray(location.gallery) && location.gallery.length > 0 && (
+                    <div className="location-gallery">
+                        {location.gallery.map((img) => (
+                            <div key={img} className="location-gallery-item">
+                                <img src={img} alt={location.title} />
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </section>
+        </main>
+    );
+}
