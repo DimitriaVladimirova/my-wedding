@@ -3,12 +3,13 @@ import { getLocations, getMenus, getColors } from "../../services/design";
 import LocationsSection from "./LocationSection";
 import MenuSection from "./MenuSection";
 import ThemeSection from "./ThemeSection";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 
 export default function DesignChoices() {
-  // TODO: replace these with real auth from context later
-  const isAuthenticated = true; //set opposite for change
-  const isAdmin = true;  //set opposite for change  
+ 
+  const {isAuthenticated, isAdmin} = useContext(UserContext);
 
   const [locations, setLocations] = useState([]);
   const [menus, setMenus] = useState([]);

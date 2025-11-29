@@ -1,40 +1,41 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
+import { UserContext } from "../../context/UserContext";
 
 export default function Login() {
     const navigate = useNavigate();
+    const { loginHandler } = useContext(UserContext);
 
     const [values, setValues] = useState({
-        email: '',
-        password: '',
-    })
+        email: "",
+        password: "",
+    });
 
-    const [error, setError] = useState('');
+    const [error, setError] = useState("");
 
     const onChangeHandler = (e) => {
-        setValues(state => ({
-            ...state, [e.target.name]: e.target.value,
-        }))
+        setValues((state) => ({
+            ...state,
+            [e.target.name]: e.target.value,
+        }));
     };
 
-    const onSubmitHandler = (e) => {
+    const onSubmitHandler = async (e) => {
         e.preventDefault();
-        setError('');
+        setError("");
 
         if (!values.email || !values.password) {
-            setError('All fields are required!');
+            setError("All fields are required!");
             return;
         }
 
         try {
-            //TODO add the server and do a real login
-            console.log("Login attempt:", values);
+            await loginHandler(values.email.trim(), values.password);
             navigate("/");
         } catch (err) {
-            setError("Login failed!");
+            setError(err.message || "Login failed!");
         }
-
-    }
+    };
 
     return (
         <section className="auth-section">
@@ -52,6 +53,7 @@ export default function Login() {
                         value={values.email}
                         onChange={onChangeHandler}
                         placeholder="you@example.com"
+                        required
                     />
                 </label>
 
@@ -64,6 +66,7 @@ export default function Login() {
                         value={values.password}
                         onChange={onChangeHandler}
                         placeholder="••••••••"
+                        required
                     />
                 </label>
 

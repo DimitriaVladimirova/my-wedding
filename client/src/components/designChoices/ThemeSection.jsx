@@ -13,6 +13,13 @@ export default function ThemeSection({
     chooseLightColor,
   } = useWeddingSelection();
 
+  const handleDeleteColor = (id) => {
+    // TODO: call DELETE /data/colors/:id when implement
+    console.log("Delete color with id:", id);
+  };
+
+  const canChoose = isAuthenticated && !isAdmin;
+
   return (
     <section className="design-section">
       <div className="design-section-header">
@@ -29,23 +36,37 @@ export default function ThemeSection({
         <h3 className="theme-subtitle">Main (dark) colors</h3>
         <div className="color-row">
           {darkColors.map((color) => (
-            <button
-              key={color._id}
-              className={
-                "color-circle-btn" +
-                (selectedDarkColorId === color._id
-                  ? " color-circle-btn--selected"
-                  : "")
-              }
-              onClick={() => isAuthenticated && chooseDarkColor(color._id)}
-              type="button"
-            >
-              <span
-                className="color-circle"
-                style={{ backgroundColor: color.hex }}
-              />
-              <span className="color-name">{color.name}</span>
-            </button>
+            <div key={color._id} className="color-item">
+              <button
+                className={
+                  "color-circle-btn" +
+                  (selectedDarkColorId === color._id
+                    ? " color-circle-btn--selected"
+                    : "")
+                }
+                type="button"
+                onClick={() => {
+                  if (!canChoose) return;
+                  chooseDarkColor(color._id);
+                }}
+              >
+                <span
+                  className="color-circle"
+                  style={{ backgroundColor: color.hex }}
+                />
+                <span className="color-name">{color.name}</span>
+              </button>
+
+              {isAdmin && (
+                <button
+                  className="color-delete-btn"
+                  type="button"
+                  onClick={() => handleDeleteColor(color._id)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
           ))}
         </div>
       </div>
@@ -54,23 +75,37 @@ export default function ThemeSection({
         <h3 className="theme-subtitle">Accent (light) colors</h3>
         <div className="color-row">
           {lightColors.map((color) => (
-            <button
-              key={color._id}
-              className={
-                "color-circle-btn" +
-                (selectedLightColorId === color._id
-                  ? " color-circle-btn--selected"
-                  : "")
-              }
-              onClick={() => isAuthenticated && chooseLightColor(color._id)}
-              type="button"
-            >
-              <span
-                className="color-circle"
-                style={{ backgroundColor: color.hex }}
-              />
-              <span className="color-name">{color.name}</span>
-            </button>
+            <div key={color._id} className="color-item">
+              <button
+                className={
+                  "color-circle-btn" +
+                  (selectedLightColorId === color._id
+                    ? " color-circle-btn--selected"
+                    : "")
+                }
+                type="button"
+                onClick={() => {
+                  if (!canChoose) return;
+                  chooseLightColor(color._id);
+                }}
+              >
+                <span
+                  className="color-circle"
+                  style={{ backgroundColor: color.hex }}
+                />
+                <span className="color-name">{color.name}</span>
+              </button>
+
+              {isAdmin && (
+                <button
+                  className="color-delete-btn"
+                  type="button"
+                  onClick={() => handleDeleteColor(color._id)}
+                >
+                  Delete
+                </button>
+              )}
+            </div>
           ))}
         </div>
       </div>

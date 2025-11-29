@@ -1,16 +1,21 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router";
+import { UserContext } from "../../context/UserContext";
 
 export default function Logout() {
+    const { logoutHandler } = useContext( UserContext )
     const navigate = useNavigate();
 
     useEffect(() => {
 
-        //TODO add the server and do await fetch
-        console.log("User logged out");
-        navigate('/');
-
-    }, [navigate]);
+       logoutHandler()
+       .then(() => navigate('/'))
+       .catch(() => {
+        alert('Problem with logout.')
+        navigate('/')
+       })
+        
+    }, [logoutHandler, navigate]);
 
     return null
 }

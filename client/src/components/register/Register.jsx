@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router";
 import { useState } from "react";
+import { UserContext } from "../../context/UserContext";
+import { useContext } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
+  const { registerHandler } = useContext(UserContext)
 
   const [values, setValues] = useState({
     email: '',
@@ -13,7 +16,7 @@ export default function Register() {
   const [error, setError] = useState("");
 
   function onChangeHandler(e) {
-    setValues(state => ({
+    setValues((state) => ({
       ...state,
       [e.target.name]: e.target.value,
     }));
@@ -28,8 +31,8 @@ export default function Register() {
       return;
     }
 
-    if (values.password.length < 6) {
-      setError("Password must be at least 6 characters long!");
+    if (values.password.length < 4) {
+      setError("Password must be at least 4 characters long!");
       return
     }
 
@@ -39,11 +42,10 @@ export default function Register() {
     }
 
     try {
-      //TODO add the server and do a real register
-      console.log("Registering user:", values);
+      await registerHandler(values.email.trim(), values.password);
       navigate("/");
     } catch (err) {
-      setError("Registration failed!");
+      setError(err.message || "Registration failed!");
     }
 
   }
@@ -64,6 +66,7 @@ export default function Register() {
             value={values.email}
             onChange={onChangeHandler}
             placeholder="you@example.com"
+            required
           />
         </label>
 
@@ -76,6 +79,7 @@ export default function Register() {
             value={values.password}
             onChange={onChangeHandler}
             placeholder="••••••••"
+            required
           />
         </label>
 
@@ -88,6 +92,7 @@ export default function Register() {
             value={values.rePassword}
             onChange={onChangeHandler}
             placeholder="••••••••"
+            required
           />
         </label>
 

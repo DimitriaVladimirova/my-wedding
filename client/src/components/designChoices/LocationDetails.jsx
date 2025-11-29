@@ -1,20 +1,20 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getLocationById } from "../../services/design";
+import { UserContext } from "../../context/UserContext";
+import { useWeddingSelection } from "../../context/WeddingSelectionContext";
 
 export default function LocationDetails() {
     const { locationId } = useParams();
     const navigate = useNavigate();
 
-    // TODO: hook up to real auth later and FIX IMAGES
-    const isAuthenticated = true;
-    const isAdmin = true;
+    // TODO: FIX IMAGES
+    const { isAuthenticated, isAdmin } = useContext(UserContext);
+    const { selectedLocationId, chooseLocation } = useWeddingSelection()
 
     const [location, setLocation] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
-
-    const [isChosen, setIsChosen] = useState(false);
 
     useEffect(() => {
         let cancelled = false;
@@ -47,9 +47,10 @@ export default function LocationDetails() {
 
     const handleChoose = () => {
         if (!isAuthenticated) return;
-        setIsChosen(true);
-        // later: save to /data/weddings
+        chooseLocation(location._id);
     };
+
+    const isChosen = selectedLocationId === location?._id;
 
     if (loading) {
         return (
@@ -112,7 +113,7 @@ export default function LocationDetails() {
                                 location.summaryShort}
                         </p>
 
-                        {isAuthenticated && (
+                        {isAuthenticated && !isAdmin && (
                             <button
                                 className="design-primary-btn"
                                 type="button"

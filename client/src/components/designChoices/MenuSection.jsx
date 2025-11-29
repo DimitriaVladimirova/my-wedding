@@ -51,7 +51,7 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
                 {menu.pricePerGuest} € / guest · max {menu.maxGuests} guests
               </p>
 
-              {isAuthenticated && (
+              {isAuthenticated && !isAdmin && (
                 <div className="design-card-actions menu-actions">
                   <button
                     className="design-primary-btn"

@@ -50,7 +50,7 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
                   Details
                 </button>
 
-                {isAuthenticated && (
+                {isAuthenticated && !isAdmin && (
                   <button
                     className="design-primary-btn"
                     type="button"
@@ -62,6 +62,17 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
                   </button>
                 )}
               </div>
+
+              {isAdmin && (
+                <div className="details-admin-actions">
+                  <button className="design-secondary-btn" type="button">
+                    Edit
+                  </button>
+                  <button className="design-danger-btn" type="button">
+                    Delete
+                  </button>
+                </div>
+              )}
             </div>
           </article>
         ))}
