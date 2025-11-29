@@ -1320,6 +1320,10 @@
     var identity = "email";
     var protectedData = {
         users: {
+            "24e6ebd1-2e94-4fcc-8612-78f3948fd071": {
+                email: "admin@abv.bg",
+                hashedPassword: "fac7060c3e17e6f151f247eacb2cd5ae80b8c36aedb8764e18a41bbdc16aa302"
+            },
             "35c62d76-8152-4626-8712-eeb96381bea8": {
                 email: "peter@abv.bg",
                 hashedPassword: "83313014ed3e2391aa1332615d2f053cf5c1bfe05ca1cbcb5582443822df6eb1"
@@ -1333,213 +1337,213 @@
         }
     };
     var seedData = {
-        
+
         locations: {
-        "villa-bella-garden": {
-            "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
-            "title": "Villa Bella Garden",
-            "city": "Sofia",
-            "country": "Bulgaria",
-            "imageUrl": "client/public/images/vila-garden.jpg",
-            "gallery": [
-                "/images/vila-garden.jpg",
-                "/images/locations/villa-bella-2.jpg",
-                "/images/locations/villa-bella-3.jpg"
-            ],
-            "summaryShort": "Romantic villa garden with fairy lights and an intimate outdoor ceremony space.",
-            "summaryLong": "Villa Bella Garden is a romantic venue surrounded by greenery, soft lighting and a cozy outdoor ceremony space. Perfect for medium-sized weddings that feel both elegant and warm. The venue offers a charming patio for dinner, a small dance floor and plenty of corners for magical photos.",
-            "_createdOn": 1710000000000
+            "villa-bella-garden": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "title": "Villa Bella Garden",
+                "city": "Sofia",
+                "country": "Bulgaria",
+                "imageUrl": "client/public/images/vila-garden.jpg",
+                "gallery": [
+                    "/images/vila-garden.jpg",
+                    "/images/locations/villa-bella-2.jpg",
+                    "/images/locations/villa-bella-3.jpg"
+                ],
+                "summaryShort": "Romantic villa garden with fairy lights and an intimate outdoor ceremony space.",
+                "summaryLong": "Villa Bella Garden is a romantic venue surrounded by greenery, soft lighting and a cozy outdoor ceremony space. Perfect for medium-sized weddings that feel both elegant and warm. The venue offers a charming patio for dinner, a small dance floor and plenty of corners for magical photos.",
+                "_createdOn": 1710000000000
+            },
+            "seaside-dream-bay": {
+                "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "title": "Seaside Dream Bay",
+                "city": "Varna",
+                "country": "Bulgaria",
+                "imageUrl": "/images/locations/seaside-main.jpg",
+                "gallery": [
+                    "/images/locations/seaside-1.jpg",
+                    "/images/locations/seaside-2.jpg"
+                ],
+                "summaryShort": "Beachfront venue with sunset ceremonies and gentle sea breeze.",
+                "summaryLong": "Seaside Dream Bay offers a private beach area for a stunning ceremony by the sea. Imagine walking down the aisle at sunset, gentle waves in the background and a candlelit dinner under the stars. Ideal for couples who dream of a relaxed yet stylish seaside celebration.",
+                "_createdOn": 1710000005000
+            },
+            "mountain-view-chalet": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "title": "Mountain View Chalet",
+                "city": "Bansko",
+                "country": "Bulgaria",
+                "imageUrl": "/images/locations/mountain-main.jpg",
+                "gallery": [
+                    "/images/locations/mountain-1.jpg",
+                    "/images/locations/mountain-2.jpg"
+                ],
+                "summaryShort": "Cozy mountain lodge with panoramic views and rustic charm.",
+                "summaryLong": "Mountain View Chalet is the perfect choice for couples who love nature and cozy, rustic interiors. Surrounded by mountain peaks, the venue features a wooden hall, fireplace, and terrace with breathtaking views. Great for winter weddings and intimate autumn celebrations.",
+                "_createdOn": 1710000010000
+            }
         },
-        "seaside-dream-bay": {
-            "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
-            "title": "Seaside Dream Bay",
-            "city": "Varna",
-            "country": "Bulgaria",
-            "imageUrl": "/images/locations/seaside-main.jpg",
-            "gallery": [
-                "/images/locations/seaside-1.jpg",
-                "/images/locations/seaside-2.jpg"
-            ],
-            "summaryShort": "Beachfront venue with sunset ceremonies and gentle sea breeze.",
-            "summaryLong": "Seaside Dream Bay offers a private beach area for a stunning ceremony by the sea. Imagine walking down the aisle at sunset, gentle waves in the background and a candlelit dinner under the stars. Ideal for couples who dream of a relaxed yet stylish seaside celebration.",
-            "_createdOn": 1710000005000
+
+        menus: {
+            "classic-elegance-menu": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "title": "Classic Elegance Menu",
+                "description": "A timeless wedding menu with elegant flavors and familiar favorites.",
+                "imageUrl": "/images/menus/classic-elegance.jpg",
+                "pricePerGuest": 45,
+                "maxGuests": 150,
+                "courses": [
+                    "Seasonal green salad with vinaigrette",
+                    "Chicken fillet with creamy mushroom sauce",
+                    "Roasted vegetables and baby potatoes",
+                    "Wedding cake & mini desserts",
+                    "Soft drinks, wine and coffee"
+                ],
+                "_createdOn": 1710000100000
+            },
+            "gourmet-tasting-menu": {
+                "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
+                "title": "Gourmet Tasting Menu",
+                "description": "Fine-dining experience with carefully curated courses for food lovers.",
+                "imageUrl": "/images/menus/gourmet-tasting.jpg",
+                "pricePerGuest": 70,
+                "maxGuests": 150,
+                "courses": [
+                    "Amuse-bouche chef’s selection",
+                    "Salmon tartare with citrus dressing",
+                    "Beef fillet with red wine jus",
+                    "Chocolate lava cake with vanilla ice cream",
+                    "Selection of premium wines"
+                ],
+                "_createdOn": 1710000110000
+            },
+            "modern-vegan-menu": {
+                "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
+                "title": "Modern Vegan Menu",
+                "description": "Colorful, plant-based wedding menu full of fresh and vibrant dishes.",
+                "imageUrl": "/images/menus/vegan-modern.jpg",
+                "pricePerGuest": 55,
+                "maxGuests": 150,
+                "courses": [
+                    "Quinoa salad with roasted vegetables",
+                    "Stuffed bell peppers with lentils and herbs",
+                    "Grilled seasonal vegetables",
+                    "Vegan chocolate mousse",
+                    "Fresh fruit platters"
+                ],
+                "_createdOn": 1710000120000
+            }
         },
-        "mountain-view-chalet": {
-            "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
-            "title": "Mountain View Chalet",
-            "city": "Bansko",
-            "country": "Bulgaria",
-            "imageUrl": "/images/locations/mountain-main.jpg",
-            "gallery": [
-                "/images/locations/mountain-1.jpg",
-                "/images/locations/mountain-2.jpg"
-            ],
-            "summaryShort": "Cozy mountain lodge with panoramic views and rustic charm.",
-            "summaryLong": "Mountain View Chalet is the perfect choice for couples who love nature and cozy, rustic interiors. Surrounded by mountain peaks, the venue features a wooden hall, fireplace, and terrace with breathtaking views. Great for winter weddings and intimate autumn celebrations.",
-            "_createdOn": 1710000010000
+
+        colors: {
+            "dark-burgundy": {
+                "name": "Burgundy",
+                "hex": "#800020",
+                "shadeType": "dark"
+            },
+            "dark-navy": {
+                "name": "Navy Blue",
+                "hex": "#001f3f",
+                "shadeType": "dark"
+            },
+            "dark-emerald": {
+                "name": "Emerald Green",
+                "hex": "#006B3C",
+                "shadeType": "dark"
+            },
+            "dark-plum": {
+                "name": "Plum",
+                "hex": "#4B004B",
+                "shadeType": "dark"
+            },
+            "dark-chocolate": {
+                "name": "Chocolate Brown",
+                "hex": "#4E342E",
+                "shadeType": "dark"
+            },
+            "dark-charcoal": {
+                "name": "Charcoal",
+                "hex": "#333333",
+                "shadeType": "dark"
+            },
+            "dark-royal": {
+                "name": "Royal Blue",
+                "hex": "#27408B",
+                "shadeType": "dark"
+            },
+            "dark-forest": {
+                "name": "Forest Green",
+                "hex": "#0B3D2E",
+                "shadeType": "dark"
+            },
+            "dark-wine": {
+                "name": "Deep Wine",
+                "hex": "#5A0F2F",
+                "shadeType": "dark"
+            },
+            "dark-mauve": {
+                "name": "Deep Mauve",
+                "hex": "#5D3A6A",
+                "shadeType": "dark"
+            },
+
+            "light-ivory": {
+                "name": "Ivory",
+                "hex": "#FFFFF0",
+                "shadeType": "light"
+            },
+            "light-champagne": {
+                "name": "Champagne",
+                "hex": "#F7E7CE",
+                "shadeType": "light"
+            },
+            "light-blush": {
+                "name": "Blush Pink",
+                "hex": "#FADADD",
+                "shadeType": "light"
+            },
+            "light-dusty-rose": {
+                "name": "Dusty Rose",
+                "hex": "#E7A6A1",
+                "shadeType": "light"
+            },
+            "light-baby-blue": {
+                "name": "Baby Blue",
+                "hex": "#B3D9FF",
+                "shadeType": "light"
+            },
+            "light-mint": {
+                "name": "Soft Mint",
+                "hex": "#D5F5E3",
+                "shadeType": "light"
+            },
+            "light-lilac": {
+                "name": "Lilac",
+                "hex": "#E6DAF0",
+                "shadeType": "light"
+            },
+            "light-pearl-gray": {
+                "name": "Pearl Gray",
+                "hex": "#E5E5E5",
+                "shadeType": "light"
+            },
+            "light-vanilla": {
+                "name": "Vanilla",
+                "hex": "#FFF4D9",
+                "shadeType": "light"
+            },
+            "light-sand": {
+                "name": "Soft Sand",
+                "hex": "#F1E2C3",
+                "shadeType": "light"
+            }
+        },
+
+        weddings: {
+            // empty at start – here you’ll store each user’s chosen location/menu/colors later
         }
-    },
-
-    menus: {
-        "classic-elegance-menu": {
-            "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
-            "title": "Classic Elegance Menu",
-            "description": "A timeless wedding menu with elegant flavors and familiar favorites.",
-            "imageUrl": "/images/menus/classic-elegance.jpg",
-            "pricePerGuest": 45,
-            "maxGuests": 150,
-            "courses": [
-                "Seasonal green salad with vinaigrette",
-                "Chicken fillet with creamy mushroom sauce",
-                "Roasted vegetables and baby potatoes",
-                "Wedding cake & mini desserts",
-                "Soft drinks, wine and coffee"
-            ],
-            "_createdOn": 1710000100000
-        },
-        "gourmet-tasting-menu": {
-            "_ownerId": "847ec027-f659-4086-8032-5173e2f9c93a",
-            "title": "Gourmet Tasting Menu",
-            "description": "Fine-dining experience with carefully curated courses for food lovers.",
-            "imageUrl": "/images/menus/gourmet-tasting.jpg",
-            "pricePerGuest": 70,
-            "maxGuests": 150,
-            "courses": [
-                "Amuse-bouche chef’s selection",
-                "Salmon tartare with citrus dressing",
-                "Beef fillet with red wine jus",
-                "Chocolate lava cake with vanilla ice cream",
-                "Selection of premium wines"
-            ],
-            "_createdOn": 1710000110000
-        },
-        "modern-vegan-menu": {
-            "_ownerId": "35c62d76-8152-4626-8712-eeb96381bea8",
-            "title": "Modern Vegan Menu",
-            "description": "Colorful, plant-based wedding menu full of fresh and vibrant dishes.",
-            "imageUrl": "/images/menus/vegan-modern.jpg",
-            "pricePerGuest": 55,
-            "maxGuests": 150,
-            "courses": [
-                "Quinoa salad with roasted vegetables",
-                "Stuffed bell peppers with lentils and herbs",
-                "Grilled seasonal vegetables",
-                "Vegan chocolate mousse",
-                "Fresh fruit platters"
-            ],
-            "_createdOn": 1710000120000
-        }
-    },
-
-    colors: {
-        "dark-burgundy": {
-            "name": "Burgundy",
-            "hex": "#800020",
-            "shadeType": "dark"
-        },
-        "dark-navy": {
-            "name": "Navy Blue",
-            "hex": "#001f3f",
-            "shadeType": "dark"
-        },
-        "dark-emerald": {
-            "name": "Emerald Green",
-            "hex": "#006B3C",
-            "shadeType": "dark"
-        },
-        "dark-plum": {
-            "name": "Plum",
-            "hex": "#4B004B",
-            "shadeType": "dark"
-        },
-        "dark-chocolate": {
-            "name": "Chocolate Brown",
-            "hex": "#4E342E",
-            "shadeType": "dark"
-        },
-        "dark-charcoal": {
-            "name": "Charcoal",
-            "hex": "#333333",
-            "shadeType": "dark"
-        },
-        "dark-royal": {
-            "name": "Royal Blue",
-            "hex": "#27408B",
-            "shadeType": "dark"
-        },
-        "dark-forest": {
-            "name": "Forest Green",
-            "hex": "#0B3D2E",
-            "shadeType": "dark"
-        },
-        "dark-wine": {
-            "name": "Deep Wine",
-            "hex": "#5A0F2F",
-            "shadeType": "dark"
-        },
-        "dark-mauve": {
-            "name": "Deep Mauve",
-            "hex": "#5D3A6A",
-            "shadeType": "dark"
-        },
-
-        "light-ivory": {
-            "name": "Ivory",
-            "hex": "#FFFFF0",
-            "shadeType": "light"
-        },
-        "light-champagne": {
-            "name": "Champagne",
-            "hex": "#F7E7CE",
-            "shadeType": "light"
-        },
-        "light-blush": {
-            "name": "Blush Pink",
-            "hex": "#FADADD",
-            "shadeType": "light"
-        },
-        "light-dusty-rose": {
-            "name": "Dusty Rose",
-            "hex": "#E7A6A1",
-            "shadeType": "light"
-        },
-        "light-baby-blue": {
-            "name": "Baby Blue",
-            "hex": "#B3D9FF",
-            "shadeType": "light"
-        },
-        "light-mint": {
-            "name": "Soft Mint",
-            "hex": "#D5F5E3",
-            "shadeType": "light"
-        },
-        "light-lilac": {
-            "name": "Lilac",
-            "hex": "#E6DAF0",
-            "shadeType": "light"
-        },
-        "light-pearl-gray": {
-            "name": "Pearl Gray",
-            "hex": "#E5E5E5",
-            "shadeType": "light"
-        },
-        "light-vanilla": {
-            "name": "Vanilla",
-            "hex": "#FFF4D9",
-            "shadeType": "light"
-        },
-        "light-sand": {
-            "name": "Soft Sand",
-            "hex": "#F1E2C3",
-            "shadeType": "light"
-        }
-    },
-
-    weddings: {
-        // empty at start – here you’ll store each user’s chosen location/menu/colors later
-    }
     };
-    
+
     var rules$1 = {
         users: {
             ".create": false,
