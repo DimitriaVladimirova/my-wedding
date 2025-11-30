@@ -46,7 +46,7 @@
 
 .card-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
   gap: 16px;
 }
 
@@ -365,6 +365,47 @@
   object-fit: cover;
   border-radius: 10px;
 }
+
+.carousel-controls {
+  margin-top: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 18px;
+}
+
+.carousel-page-indicator {
+  font-size: 1em;
+  font-weight: 400;
+  color: #7a643a; 
+  padding: 6px 12px;
+  background: rgba(255, 249, 230, 0.6);
+  border-radius: 10px;
+  border: 1px solid #e2d2a6;
+}
+
+.carousel-controls .design-secondary-btn {
+  padding: 8px 18px;
+  font-size: 1em;
+  border-radius: 20px;
+  border: 1px solid #d8c298;
+  background: #fff8e6;
+  color: #866f40;
+  transition: all 0.25s ease;
+}
+
+.carousel-controls .design-secondary-btn:hover:not(:disabled) {
+  background: #f5e5c8;
+  color: #a17835;
+  transform: translateY(-2px);
+}
+
+.carousel-controls .design-secondary-btn:disabled {
+  opacity: 0.4;
+  cursor: pointer;
+  transform: none;
+}
+
 
 @media (max-width: 768px) {
   .design-section {

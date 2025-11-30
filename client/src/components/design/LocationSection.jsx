@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useWeddingSelection } from "../../context/WeddingSelectionContext";
 
@@ -5,7 +6,15 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
   const navigate = useNavigate();
   const { selectedLocationId, chooseLocation } = useWeddingSelection();
 
-  //TODO FIX images
+  const PAGE_SIZE = 3;
+  const [page, setPage] = useState(0);
+
+  const totalPages = Math.ceil(locations.length / PAGE_SIZE);
+  const start = page * PAGE_SIZE;
+  const visibleLocations = locations.slice(start, start + PAGE_SIZE);
+
+  const handlePrev = () => setPage((p) => Math.max(p - 1, 0));
+  const handleNext = () => setPage((p) => Math.min(p + 1, totalPages - 1));
 
   return (
     <section className="design-section">
@@ -13,14 +22,18 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
         <h2 className="design-section-title">Locations</h2>
 
         {isAdmin && (
-          <button className="design-admin-btn" type="button">
+          <button
+            className="design-admin-btn"
+            type="button"
+            onClick={() => navigate("/design/locations/create")}
+          >
             + Add location
           </button>
         )}
       </div>
 
       <div className="card-grid">
-        {locations.map((loc) => (
+        {visibleLocations.map((loc) => (
           <article
             key={loc._id}
             className={
@@ -50,7 +63,7 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
                   Details
                 </button>
 
-                {isAuthenticated && !isAdmin && (
+                {!isAdmin && isAuthenticated && (
                   <button
                     className="design-primary-btn"
                     type="button"
@@ -62,21 +75,34 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
                   </button>
                 )}
               </div>
-
-              {isAdmin && (
-                <div className="details-admin-actions">
-                  <button className="design-secondary-btn" type="button">
-                    Edit
-                  </button>
-                  <button className="design-danger-btn" type="button">
-                    Delete
-                  </button>
-                </div>
-              )}
             </div>
           </article>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="carousel-controls">
+          <button
+            type="button"
+            className="design-secondary-btn"
+            onClick={handlePrev}
+            disabled={page === 0}
+          >
+            ‹ Prev
+          </button>
+          <span className="carousel-page-indicator">
+            Page {page + 1} / {totalPages}
+          </span>
+          <button
+            type="button"
+            className="design-secondary-btn"
+            onClick={handleNext}
+            disabled={page === totalPages - 1}
+          >
+            Next ›
+          </button>
+        </div>
+      )}
     </section>
   );
 }

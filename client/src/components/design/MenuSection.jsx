@@ -1,12 +1,33 @@
 import { useWeddingSelection } from "../../context/WeddingSelectionContext";
+import { useNavigate } from "react-router";
+import { useState } from "react";
 
 export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
+
+  const navigate = useNavigate();
+
   const {
     selectedMenuId,
     chooseMenu,
     menuGuestsByMenu,
     setMenuGuestsForMenu,
   } = useWeddingSelection();
+
+
+
+
+
+  const PAGE_SIZE = 3;
+  const [page, setPage] = useState(0);
+  const totalPages = Math.ceil(menus.length / PAGE_SIZE);
+  const start = page * PAGE_SIZE;
+  const visibleMenus = menus.slice(start, start + PAGE_SIZE);
+  const handlePrev = () => setPage((p) => Math.max(p - 1, 0));
+  const handleNext = () => setPage((p) => Math.min(p + 1, totalPages - 1));
+
+
+
+
 
   const handleGuestsChange = (menuId, e) => {
     let value = Number(e.target.value);
@@ -22,14 +43,18 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
         <h2 className="design-section-title">Menu</h2>
 
         {isAdmin && (
-          <button className="design-admin-btn" type="button">
+          <button
+            className="design-admin-btn"
+            type="button"
+            onClick={() => navigate("/design/menus/create")}
+          >
             + Add menu
           </button>
         )}
       </div>
 
       <div className="card-grid">
-        {menus.map((menu) => (
+        {visibleMenus.map((menu) => (
           <article
             key={menu._id}
             className={
@@ -92,6 +117,31 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
           </article>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="carousel-controls">
+          <button
+            type="button"
+            className="design-secondary-btn"
+            onClick={handlePrev}
+            disabled={page === 0}
+          >
+            ‹ Prev
+          </button>
+          <span className="carousel-page-indicator">
+            Page {page + 1} / {totalPages}
+          </span>
+          <button
+            type="button"
+            className="design-secondary-btn"
+            onClick={handleNext}
+            disabled={page === totalPages - 1}
+          >
+            Next ›
+          </button>
+        </div>
+      )}
+
     </section>
   );
 }

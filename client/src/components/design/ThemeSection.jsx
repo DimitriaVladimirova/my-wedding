@@ -1,4 +1,5 @@
 import { useWeddingSelection } from "../../context/WeddingSelectionContext";
+import { useNavigate } from "react-router";
 
 export default function ThemeSection({
   darkColors,
@@ -6,6 +7,9 @@ export default function ThemeSection({
   isAdmin,
   isAuthenticated,
 }) {
+
+  const navigate = useNavigate()
+
   const {
     selectedDarkColorId,
     chooseDarkColor,
@@ -26,7 +30,11 @@ export default function ThemeSection({
         <h2 className="design-section-title">Theme</h2>
 
         {isAdmin && (
-          <button className="design-admin-btn" type="button">
+          <button
+            className="design-admin-btn"
+            type="button"
+            onClick={() => navigate("/design/colors/create")}
+          >
             + Add colors
           </button>
         )}
