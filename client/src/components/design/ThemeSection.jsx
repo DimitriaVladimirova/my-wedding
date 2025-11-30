@@ -6,6 +6,7 @@ export default function ThemeSection({
   lightColors,
   isAdmin,
   isAuthenticated,
+  onDeleteColor,
 }) {
 
   const navigate = useNavigate()
@@ -16,11 +17,6 @@ export default function ThemeSection({
     selectedLightColorId,
     chooseLightColor,
   } = useWeddingSelection();
-
-  const handleDeleteColor = (id) => {
-    // TODO: call DELETE /data/colors/:id when implement
-    console.log("Delete color with id:", id);
-  };
 
   const canChoose = isAuthenticated && !isAdmin;
 
@@ -69,7 +65,7 @@ export default function ThemeSection({
                 <button
                   className="color-delete-btn"
                   type="button"
-                  onClick={() => handleDeleteColor(color._id)}
+                  onClick={() => onDeleteColor(color._id)}
                 >
                   Delete
                 </button>
@@ -108,7 +104,7 @@ export default function ThemeSection({
                 <button
                   className="color-delete-btn"
                   type="button"
-                  onClick={() => handleDeleteColor(color._id)}
+                  onClick={() => onDeleteColor(color._id)}
                 >
                   Delete
                 </button>

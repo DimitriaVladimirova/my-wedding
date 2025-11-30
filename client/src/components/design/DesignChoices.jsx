@@ -1,15 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { getLocations, getMenus, getColors } from "../../services/design";
 import LocationsSection from "./LocationSection";
 import MenuSection from "./MenuSection";
 import ThemeSection from "./ThemeSection";
 import { UserContext } from "../../context/UserContext";
-import { useContext } from "react";
+import useRequest from "../../hooks/useRequest";
 
 
 export default function DesignChoices() {
  
-  const {isAuthenticated, isAdmin} = useContext(UserContext);
+  const { isAuthenticated, isAdmin } = useContext(UserContext);
+  const { request } = useRequest();
 
   const [locations, setLocations] = useState([]);
   const [menus, setMenus] = useState([]);
@@ -62,6 +63,36 @@ export default function DesignChoices() {
     };
   }, []);
 
+  const handleDeleteMenu = async (id) => {
+    if (!isAdmin) return;
+    const sure = window.confirm("Delete this menu?");
+    if (!sure) return;
+
+    try {
+      await request(`/data/menus/${id}`, "DELETE", null, { admin: true });
+      setMenus((prev) => prev.filter((m) => m._id !== id));
+    } catch (err) {
+      alert(err.message || "Failed to delete menu");
+    }
+  };
+
+  const handleDeleteColor = async (id) => {
+    if (!isAdmin) return;
+    const sure = window.confirm("Delete this color?");
+    if (!sure) return;
+
+    try {
+      await request(`/data/colors/${id}`, "DELETE", null, { admin: true });
+
+      setDarkColors((prev) => prev.filter((c) => c._id !== id));
+      setLightColors((prev) => prev.filter((c) => c._id !== id));
+    } catch (err) {
+      alert(err.message || "Failed to delete color");
+    }
+  };
+
+
+
   if (loading) {
     return (
       <main className="design-page">
@@ -101,6 +132,7 @@ export default function DesignChoices() {
         menus={menus}
         isAdmin={isAdmin}
         isAuthenticated={isAuthenticated}
+        onDeleteMenu={handleDeleteMenu}
       />
 
       <ThemeSection
@@ -108,6 +140,7 @@ export default function DesignChoices() {
         lightColors={lightColors}
         isAdmin={isAdmin}
         isAuthenticated={isAuthenticated}
+        onDeleteColor={handleDeleteColor}
       />
     </main>
   );

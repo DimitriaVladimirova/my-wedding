@@ -29,6 +29,13 @@ export default function useRequest(initialUrl, initialState) {
       };
     }
 
+    if (config.admin) {
+      options.headers = {
+        ...options.headers,
+        "X-Admin": "true",
+      };
+    }
+
     const response = await fetch(`${baseUrl}${url}`, options);
 
     if (!response.ok) {

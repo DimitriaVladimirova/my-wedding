@@ -2,7 +2,7 @@ import { useWeddingSelection } from "../../context/WeddingSelectionContext";
 import { useNavigate } from "react-router";
 import { useState } from "react";
 
-export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
+export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteMenu }) {
 
   const navigate = useNavigate();
 
@@ -13,10 +13,6 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
     setMenuGuestsForMenu,
   } = useWeddingSelection();
 
-
-
-
-
   const PAGE_SIZE = 3;
   const [page, setPage] = useState(0);
   const totalPages = Math.ceil(menus.length / PAGE_SIZE);
@@ -24,10 +20,6 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
   const visibleMenus = menus.slice(start, start + PAGE_SIZE);
   const handlePrev = () => setPage((p) => Math.max(p - 1, 0));
   const handleNext = () => setPage((p) => Math.min(p + 1, totalPages - 1));
-
-
-
-
 
   const handleGuestsChange = (menuId, e) => {
     let value = Number(e.target.value);
@@ -108,7 +100,8 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated }) {
                   <button className="design-secondary-btn" type="button">
                     Edit
                   </button>
-                  <button className="design-danger-btn" type="button">
+                  <button className="design-danger-btn" type="button"
+                  onClick={() => onDeleteMenu(menu._id)}>
                     Delete
                   </button>
                 </div>
