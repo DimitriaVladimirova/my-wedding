@@ -1,6 +1,6 @@
 **ABOUT THE PROJECT:**
 
-My Wedding is a Single page React application for planning a dream wedding.
+My Wedding is a single page React application for planning a dream wedding.
 Users can explore wedding locations, menus, and color themes, while admins can fully manage all content (create, edit, delete). 
 
 **HOW IT WORKS:**
@@ -27,10 +27,10 @@ Users can explore wedding locations, menus, and color themes, while admins can f
 •	Browse all locations, menus, and colors 
 
 •	Select: 
-o	One location 
-o	Menu + number of guests 
-o	One dark color 
-o	One light color 
+-	One location 
+-	Menu + number of guests 
+-	One dark color 
+-	One light color 
 
 •	See their selections in the My Wedding page 
 
