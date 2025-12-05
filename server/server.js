@@ -1347,7 +1347,6 @@
                 "imageUrl": "/images/vila-garden.jpg",
                 "gallery": [
                     "/images/villa-garden.jpg",
-                    "/images/villa-garden.jpg",
                 ],
                 "summaryShort": "Romantic villa garden with fairy lights and an intimate outdoor ceremony space.",
                 "summaryLong": "Villa Bella Garden is a romantic venue surrounded by greenery, soft lighting and a cozy outdoor ceremony space. Perfect for medium-sized weddings that feel both elegant and warm. The venue offers a charming patio for dinner, a small dance floor and plenty of corners for magical photos.",
@@ -1361,7 +1360,6 @@
                 "imageUrl": "/images/sea-side.avif",
                 "gallery": [
                     "/images/sea.png",
-                    "/images/sea.png"
                 ],
                 "summaryShort": "Beachfront venue with sunset ceremonies and gentle sea breeze.",
                 "summaryLong": "Seaside Dream Bay offers a private beach area for a stunning ceremony by the sea. Imagine walking down the aisle at sunset, gentle waves in the background and a candlelit dinner under the stars. Ideal for couples who dream of a relaxed yet stylish seaside celebration.",
@@ -1375,7 +1373,6 @@
                 "imageUrl": "/images/forest.jpg",
                 "gallery": [
                     "/images/forest2.webp",
-                    "/images/forest2.webp"
                 ],
                 "summaryShort": "Cozy mountain lodge with panoramic views and rustic charm.",
                 "summaryLong": "Mountain View Chalet is the perfect choice for couples who love nature and cozy, rustic interiors. Surrounded by mountain peaks, the venue features a wooden hall, fireplace, and terrace with breathtaking views. Great for winter weddings and intimate autumn celebrations.",
