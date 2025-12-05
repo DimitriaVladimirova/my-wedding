@@ -143,7 +143,8 @@ export default function LocationDetails() {
 
             {isAdmin && (
               <div className="details-admin-actions">
-                <button className="design-secondary-btn" type="button">
+                <button className="design-secondary-btn" type="button"
+                  onClick={() => navigate(`/design/locations/${location._id}/edit`)}>
                   Edit
                 </button>
                 <button

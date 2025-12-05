@@ -11,6 +11,8 @@ import LocationDetails from "./components/design/locationDetails"
 import LocationCreate from "./components/create/LocationCreate"
 import MenuCreate from "./components/create/MenuCreate"
 import ColorCreate from "./components/create/ColorCreate"
+import LocationEdit from "./components/edit/LocationEdit"
+import MenuEdit from "./components/edit/MenuEdit"
 
 function App() {
 
@@ -23,7 +25,9 @@ function App() {
             <Route path="/design" element={<DesignChoices/>}/>
             <Route path="/design/locations/:locationId" element={<LocationDetails />} />
             <Route path="/design/locations/create" element={<LocationCreate />} />
+            <Route path="/design/locations/:locationId/edit" element={<LocationEdit/>} />
             <Route path="/design/menus/create" element={<MenuCreate />} />
+            <Route path="/design/menus/:menuId/edit" element={<MenuEdit/>}/>
             <Route path="/design/colors/create" element={<ColorCreate />} />
             <Route path="/about" element={<About/>}/>
             <Route path="/register" element={<Register/>}/>

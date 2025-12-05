@@ -15,3 +15,7 @@ export function getColors() {
 export function getLocationById(id) {
     return get(`/data/locations/${id}`)
 }
+
+export function getMenuById(id) {
+  return get(`/data/menus/${id}`)
+}

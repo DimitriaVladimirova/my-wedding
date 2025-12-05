@@ -97,11 +97,12 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteM
 
               {isAdmin && (
                 <div className="details-admin-actions">
-                  <button className="design-secondary-btn" type="button">
+                  <button className="design-secondary-btn" type="button"
+                    onClick={() => navigate(`/design/menus/${menu._id}/edit`)}>
                     Edit
                   </button>
                   <button className="design-danger-btn" type="button"
-                  onClick={() => onDeleteMenu(menu._id)}>
+                    onClick={() => onDeleteMenu(menu._id)}>
                     Delete
                   </button>
                 </div>
