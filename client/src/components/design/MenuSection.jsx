@@ -7,8 +7,8 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteM
   const navigate = useNavigate();
 
   const {
-    selectedMenuId,
-    chooseMenu,
+    selectedMenuIds,
+    toggleMenu,
     menuGuestsByMenu,
     setMenuGuestsForMenu,
   } = useWeddingSelection();
@@ -29,6 +29,8 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteM
     setMenuGuestsForMenu(menuId, value);
   };
 
+  const canChoose = isAuthenticated && !isAdmin;
+
   return (
     <section className="design-section">
       <div className="design-section-header">
@@ -46,12 +48,17 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteM
       </div>
 
       <div className="card-grid">
-        {visibleMenus.map((menu) => (
+        {visibleMenus.map((menu) => 
+        {
+          const isSelected = selectedMenuIds.includes(menu._id);
+          const guests = menuGuestsByMenu[menu._id] ?? 1;
+
+          return (
           <article
             key={menu._id}
             className={
               "design-card" +
-              (menu._id === selectedMenuId ? " design-card--selected" : "")
+              (isSelected ? " design-card--selected" : "")
             }
           >
             <div className="design-card-image-wrap">
@@ -68,32 +75,30 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteM
                 {menu.pricePerGuest} € / guest · max {menu.maxGuests} guests
               </p>
 
-              {isAuthenticated && !isAdmin && (
-                <div className="design-card-actions menu-actions">
-                  <button
-                    className="design-primary-btn"
-                    type="button"
-                    onClick={() => chooseMenu(menu._id)}
-                  >
-                    {selectedMenuId === menu._id
-                      ? "Menu selected"
-                      : "Choose this menu"}
-                  </button>
+              {canChoose && (
+                  <div className="design-card-actions menu-actions">
+                    <button
+                      className="design-primary-btn"
+                      type="button"
+                      onClick={() => toggleMenu(menu._id)}
+                    >
+                      {isSelected ? "Remove from selection" : "Add this menu"}
+                    </button>
 
-                  <div className="menu-quantity">
-                    <label>
-                      Guests:{" "}
-                      <input
-                        type="number"
-                        min="1"
-                        max="150"
-                        value={menuGuestsByMenu[menu._id] ?? 1}
-                        onChange={(e) => handleGuestsChange(menu._id, e)}
-                      />
-                    </label>
+                    <div className="menu-quantity">
+                      <label>
+                        Guests:{" "}
+                        <input
+                          type="number"
+                          min="1"
+                          max="150"
+                          value={guests}
+                          onChange={(e) => handleGuestsChange(menu._id, e)}
+                        />
+                      </label>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
 
               {isAdmin && (
                 <div className="details-admin-actions">
@@ -109,7 +114,7 @@ export default function MenuSection({ menus, isAdmin, isAuthenticated, onDeleteM
               )}
             </div>
           </article>
-        ))}
+        )})}
       </div>
 
       {totalPages > 1 && (

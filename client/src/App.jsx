@@ -13,6 +13,7 @@ import MenuCreate from "./components/create/MenuCreate"
 import ColorCreate from "./components/create/ColorCreate"
 import LocationEdit from "./components/edit/LocationEdit"
 import MenuEdit from "./components/edit/MenuEdit"
+import MyWedding from "./components/myWeddingProfile/MyWedding"
 
 function App() {
 
@@ -29,6 +30,7 @@ function App() {
             <Route path="/design/menus/create" element={<MenuCreate />} />
             <Route path="/design/menus/:menuId/edit" element={<MenuEdit/>}/>
             <Route path="/design/colors/create" element={<ColorCreate />} />
+            <Route path="/my-wedding" element={<MyWedding/>} />
             <Route path="/about" element={<About/>}/>
             <Route path="/register" element={<Register/>}/>
             <Route path="/login" element={<Login/>}/>
