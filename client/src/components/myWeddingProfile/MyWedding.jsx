@@ -170,15 +170,7 @@ export default function MyWedding() {
       {!hasAnySelection && (
         <section className="design-section">
           <p className="design-intro">
-            You haven&apos;t selected anything yet. Go to{" "}
-            <button
-              type="button"
-              className="link-button"
-              onClick={() => navigate("/design")}
-            >
-              Design Choices
-            </button>{" "}
-            to start planning your wedding.
+            You haven&apos;t selected anything yet. Go to Design Choices to start planning your wedding.
           </p>
         </section>
       )}

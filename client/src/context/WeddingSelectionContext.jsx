@@ -1,21 +1,61 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { UserContext } from "./UserContext";
 
 const WeddingSelectionContext = createContext();
-const STORAGE_KEY = "weddingSelections";
+const STORAGE_KEY_PREFIX = "weddingSelections";
+
+const initialState = {
+  selectedLocationId: null,
+  selectedMenuIds: [],
+  menuGuestsByMenu: {},
+  selectedDarkColorId: null,
+  selectedLightColorId: null,
+};
 
 export function WeddingSelectionProvider({ children }) {
-  const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [selectedMenuIds, setSelectedMenuIds] = useState([]);
-  const [menuGuestsByMenu, setMenuGuestsByMenu] = useState({});
-  const [selectedDarkColorId, setSelectedDarkColorId] = useState(null);
-  const [selectedLightColorId, setSelectedLightColorId] = useState(null);
+  const { user } = useContext(UserContext);
 
+  const [selectedLocationId, setSelectedLocationId] = useState(
+    initialState.selectedLocationId
+  );
+  const [selectedMenuIds, setSelectedMenuIds] = useState(
+    initialState.selectedMenuIds
+  );
+  const [menuGuestsByMenu, setMenuGuestsByMenu] = useState(
+    initialState.menuGuestsByMenu
+  );
+  const [selectedDarkColorId, setSelectedDarkColorId] = useState(
+    initialState.selectedDarkColorId
+  );
+  const [selectedLightColorId, setSelectedLightColorId] = useState(
+    initialState.selectedLightColorId
+  );
 
+  const userKey = user?._id || user?.id || user?.email || null;
+
+  const getStorageKey = (key) =>
+    key ? `${STORAGE_KEY_PREFIX}:${key}` : STORAGE_KEY_PREFIX;
 
   useEffect(() => {
+    if (!userKey) {
+      setSelectedLocationId(initialState.selectedLocationId);
+      setSelectedMenuIds(initialState.selectedMenuIds);
+      setMenuGuestsByMenu(initialState.menuGuestsByMenu);
+      setSelectedDarkColorId(initialState.selectedDarkColorId);
+      setSelectedLightColorId(initialState.selectedLightColorId);
+      return;
+    }
+
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
+      const raw = localStorage.getItem(getStorageKey(userKey));
+      if (!raw) {
+        setSelectedLocationId(initialState.selectedLocationId);
+        setSelectedMenuIds(initialState.selectedMenuIds);
+        setMenuGuestsByMenu(initialState.menuGuestsByMenu);
+        setSelectedDarkColorId(initialState.selectedDarkColorId);
+        setSelectedLightColorId(initialState.selectedLightColorId);
+        return;
+      }
 
       const data = JSON.parse(raw);
 
@@ -26,10 +66,17 @@ export function WeddingSelectionProvider({ children }) {
       setSelectedLightColorId(data.selectedLightColorId ?? null);
     } catch (err) {
       console.error("Failed to load wedding selections", err);
+      setSelectedLocationId(initialState.selectedLocationId);
+      setSelectedMenuIds(initialState.selectedMenuIds);
+      setMenuGuestsByMenu(initialState.menuGuestsByMenu);
+      setSelectedDarkColorId(initialState.selectedDarkColorId);
+      setSelectedLightColorId(initialState.selectedLightColorId);
     }
-  }, []);
+  }, [userKey]);
 
   useEffect(() => {
+    if (!userKey) return; 
+
     const data = {
       selectedLocationId,
       selectedMenuIds,
@@ -39,20 +86,18 @@ export function WeddingSelectionProvider({ children }) {
     };
 
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      localStorage.setItem(getStorageKey(userKey), JSON.stringify(data));
     } catch (err) {
       console.error("Failed to save wedding selections", err);
     }
   }, [
+    userKey,
     selectedLocationId,
     selectedMenuIds,
     menuGuestsByMenu,
     selectedDarkColorId,
     selectedLightColorId,
   ]);
-
-
-
 
   const chooseLocation = (id) => setSelectedLocationId(id);
 
