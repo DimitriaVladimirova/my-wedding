@@ -36,6 +36,11 @@ export default function useRequest(initialUrl, initialState) {
       };
     }
 
+    const controller = new AbortController(); 
+    options.signal = controller.signal; 
+
+    request.abort = () => controller.abort();
+
     const response = await fetch(`${baseUrl}${url}`, options);
 
     if (!response.ok) {
@@ -59,9 +64,20 @@ export default function useRequest(initialUrl, initialState) {
   useEffect(() => {
     if (!initialUrl) return;
 
+    let cancelled = false;
+
     request(initialUrl)
-      .then((result) => setData(result))
-      .catch((err) => alert(err.message || err));
+      .then((result) => {
+       if (!cancelled) setData(result)
+      })
+      .catch((err) => {
+        if (!cancelled) alert(err.message || err);
+      });
+
+      return () => {
+        cancelled = true;
+        request.abort?.();
+      }
   }, [initialUrl]);
 
   return {

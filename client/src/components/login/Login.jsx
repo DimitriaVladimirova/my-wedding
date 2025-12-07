@@ -1,66 +1,53 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router";
 import { UserContext } from "../../context/UserContext";
+import useForm from "../../hooks/useForm";
 
 export default function Login() {
     const navigate = useNavigate();
     const { loginHandler } = useContext(UserContext);
 
-    const [values, setValues] = useState({
-        email: "",
-        password: "",
-    });
-
     const [error, setError] = useState("");
 
-    const onChangeHandler = (e) => {
-        setValues((state) => ({
-            ...state,
-            [e.target.name]: e.target.value,
-        }));
-    };
+    const { register, formAction } = useForm(
+        async (values) => {
+            const email = values.email.trim();
+            const password = values.password;
+            setError("");
 
-    const onSubmitHandler = async (e) => {
-        e.preventDefault();
-        setError("");
+            if (!email || !password) {
+                return setError("All fields are required!");
+            }
 
-        const email = values.email.trim();
-        const password = values.password;
+            const emailRegex = /.+@.+\..+/;
+            if (!emailRegex.test(email)) {
+                return setError("Please enter a valid email address.");
+            }
 
-        if (!email || !password) {
-            setError("All fields are required!");
-            return;
+            try {
+                await loginHandler(email, password);
+                navigate("/");
+            } catch (err) {
+                setError(err.message || "Login failed!");
+            }
+        },
+        {
+            email: "",
+            password: "",
         }
-
-        const emailRegex = /.+@.+\..+/;
-        if (!emailRegex.test(email)) {
-            setError("Please enter a valid email address.");
-            return;
-        }
-
-        try {
-            await loginHandler(email, password);
-            navigate("/");
-        } catch (err) {
-            setError(err.message || "Login failed!");
-        }
-    };
+    );
 
     return (
         <section className="auth-section">
-            <form className="auth-form" onSubmit={onSubmitHandler}>
+            <form className="auth-form" onSubmit={(e) => { e.preventDefault(); formAction(); }}>
                 <h2 className="auth-title">Welcome back</h2>
 
                 {error && <p className="auth-error">{error}</p>}
 
                 <label className="auth-label">
                     Email
-                    <input
-                        className="auth-input"
-                        type="email"
-                        name="email"
-                        value={values.email}
-                        onChange={onChangeHandler}
+                    <input className="auth-input" type="email"
+                        {...register("email")}
                         placeholder="you@example.com"
                         required
                     />
@@ -71,17 +58,13 @@ export default function Login() {
                     <input
                         className="auth-input"
                         type="password"
-                        name="password"
-                        value={values.password}
-                        onChange={onChangeHandler}
+                        {...register("password")}
                         placeholder="••••••••"
                         required
                     />
                 </label>
 
-                <button className="auth-btn" type="submit">
-                    Login
-                </button>
+                <button className="auth-btn" type="submit">Login</button>
             </form>
         </section>
     );
