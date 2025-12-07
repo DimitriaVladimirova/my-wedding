@@ -24,13 +24,22 @@ export default function Login() {
         e.preventDefault();
         setError("");
 
-        if (!values.email || !values.password) {
+        const email = values.email.trim();
+        const password = values.password;
+
+        if (!email || !password) {
             setError("All fields are required!");
             return;
         }
 
+        const emailRegex = /.+@.+\..+/;
+        if (!emailRegex.test(email)) {
+            setError("Please enter a valid email address.");
+            return;
+        }
+
         try {
-            await loginHandler(values.email.trim(), values.password);
+            await loginHandler(email, password);
             navigate("/");
         } catch (err) {
             setError(err.message || "Login failed!");

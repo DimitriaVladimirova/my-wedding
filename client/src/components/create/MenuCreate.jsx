@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useForm from "../../hooks/useForm";
 import useRequest from "../../hooks/useRequest";
@@ -9,6 +9,8 @@ export default function MenuCreate() {
     const { request } = useRequest();
     const { isAdmin } = useContext(UserContext);
 
+    const [error, setError] = useState("");
+
     useEffect(() => {
         if (!isAdmin) {
             navigate("/design");
@@ -16,19 +18,47 @@ export default function MenuCreate() {
     }, [isAdmin, navigate]);
 
     const createMenuHandler = async (values) => {
-        const data = {
-            title: values.title,
-            description: values.description,
-            imageUrl: values.imageUrl.trim(),
-            pricePerGuest: Number(values.pricePerGuest),
-            maxGuests: Number(values.maxGuests),
-        };
+        setError("");
+
+        const title = values.title.trim();
+        const description = values.description.trim();
+        const imageUrl = values.imageUrl.trim();
+        const pricePerGuest = Number(values.pricePerGuest);
+        const maxGuests = Number(values.maxGuests);
+
+        if (!title || !description || !imageUrl) {
+            setError("Title, description and image URL are required.");
+            return;
+        }
+
+        if (description.length < 50 || description.length > 500) {
+            setError("Description must be between 50 and 500 characters.");
+            return;
+        }
+
+        const urlRegex = /^https?:\/\/.+/i;
+        if (!urlRegex.test(imageUrl)) {
+            setError("Image URL must start with http:// or https://");
+            return;
+        }
+
+        if (Number.isNaN(pricePerGuest) || pricePerGuest <= 0) {
+            setError("Price per guest must be a positive number.");
+            return;
+        }
+
+        if (Number.isNaN(maxGuests) || maxGuests < 1) {
+            setError("Max guests must be at least 1.");
+            return;
+        }
+
+        const data = { title, description, imageUrl, pricePerGuest, maxGuests, };
 
         try {
             await request("/data/menus", "POST", data);
             navigate("/design");
         } catch (err) {
-            alert(err.message || "Failed to create menu");
+            setError(err.message || "Failed to create menu");
         }
     };
 
@@ -50,6 +80,8 @@ export default function MenuCreate() {
         <section className="auth-section">
             <form className="auth-form" onSubmit={onSubmit}>
                 <h2 className="auth-title">Add Menu</h2>
+
+                {error && <p className="auth-error">{error}</p>}
 
                 <label className="auth-label">
                     Title

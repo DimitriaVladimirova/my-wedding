@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import useForm from "../../hooks/useForm";
 import useRequest from "../../hooks/useRequest";
@@ -11,12 +11,9 @@ export default function MenuEdit() {
   const { isAdmin } = useContext(UserContext);
   const { request } = useRequest();
 
-  const {
-    values,
-    setValues,
-    register,
-    formAction,
-  } = useForm(editMenuHandler, {
+  const [error, setError] = useState("")
+
+  const { setValues, register, formAction } = useForm(editMenuHandler, {
     title: "",
     description: "",
     imageUrl: "",
@@ -25,19 +22,47 @@ export default function MenuEdit() {
   });
 
   async function editMenuHandler(formValues) {
-    const data = {
-      title: formValues.title,
-      description: formValues.description,
-      imageUrl: formValues.imageUrl,
-      pricePerGuest: Number(formValues.pricePerGuest),
-      maxGuests: Number(formValues.maxGuests),
-    };
+    setError("");
+
+    const title = formValues.title.trim();
+    const description = formValues.description.trim();
+    const imageUrl = formValues.imageUrl.trim();
+    const pricePerGuest = Number(formValues.pricePerGuest);
+    const maxGuests = Number(formValues.maxGuests);
+
+    if (!title || !description || !imageUrl) {
+      setError("Title, description and image URL are required.");
+      return;
+    }
+
+    if (description.length < 50 || description.length > 500) {
+      setError("Description must be between 50 and 500 characters.");
+      return;
+    }
+
+    const urlRegex = /^https?:\/\/.+/i;
+    if (!urlRegex.test(imageUrl)) {
+      setError("Image URL must start with http:// or https://");
+      return;
+    }
+
+    if (Number.isNaN(pricePerGuest) || pricePerGuest <= 0) {
+      setError("Price per guest must be a positive number.");
+      return;
+    }
+
+    if (Number.isNaN(maxGuests) || maxGuests < 1) {
+      setError("Max guests must be at least 1.");
+      return;
+    }
+
+    const data = { title, description, imageUrl, pricePerGuest, maxGuests, };
 
     try {
       await request(`/data/menus/${menuId}`, "PUT", data, { admin: true });
       navigate("/design");
     } catch (err) {
-      alert(err.message || "Failed to update menu");
+      setError(err.message || "Failed to update menu");
     }
   }
 
@@ -87,6 +112,8 @@ export default function MenuEdit() {
     <section className="auth-section">
       <form className="auth-form" onSubmit={onSubmit}>
         <h2 className="auth-title">Edit Menu</h2>
+
+        {error && <p className="auth-error">{error}</p>}
 
         <label className="auth-label">
           Title

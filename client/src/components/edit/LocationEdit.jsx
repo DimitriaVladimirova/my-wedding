@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import useForm from "../../hooks/useForm";
 import useRequest from "../../hooks/useRequest";
@@ -11,12 +11,9 @@ export default function LocationEdit() {
   const { isAdmin } = useContext(UserContext);
   const { request } = useRequest();
 
-  const {
-    values,
-    setValues,
-    register,
-    formAction,
-  } = useForm(editLocationHandler, {
+  const [error, setError] = useState("");
+
+  const { setValues, register, formAction } = useForm(editLocationHandler, {
     title: "",
     city: "",
     country: "",
@@ -26,23 +23,52 @@ export default function LocationEdit() {
   });
 
   async function editLocationHandler(formValues) {
+    setError("");
+
+    const title = formValues.title.trim();
+    const city = formValues.city.trim();
+    const country = formValues.country.trim();
+    const imageUrl = formValues.imageUrl.trim();
+    const summaryShort = formValues.summaryShort.trim();
+    const summaryLong = formValues.summaryLong.trim();
+
+    if (!title || !city || !country || !imageUrl) {
+      setError("Title, city, country and image URL are required.");
+      return;
+    }
+
+    const urlRegex = /^https?:\/\/.+/i;
+    if (!urlRegex.test(imageUrl)) {
+      setError("Image URL must start with http:// or https://");
+      return;
+    }
+
+    if (summaryShort.length < 10) {
+      setError("Short summary must be at least 10 characters.");
+      return;
+    }
+
+    if (summaryLong.length > 500) {
+      setError("Long summary must be less than 500 characters.")
+    }
+
     const data = {
-      title: formValues.title,
-      city: formValues.city,
-      country: formValues.country,
-      imageUrl: formValues.imageUrl,
-      summaryShort: formValues.summaryShort,
-      summaryLong: formValues.summaryLong,
+      title,
+      city,
+      country,
+      imageUrl,
+      summaryShort,
+      summaryLong,
     };
 
     try {
       await request(`/data/locations/${locationId}`, "PUT", data, {
-        admin: true, 
+        admin: true,
       });
 
       navigate("/design");
     } catch (err) {
-      alert(err.message || "Failed to update location");
+      setError(err.message || "Failed to update location");
     }
   }
 
@@ -93,6 +119,8 @@ export default function LocationEdit() {
     <section className="auth-section">
       <form className="auth-form" onSubmit={onSubmit}>
         <h2 className="auth-title">Edit Location</h2>
+
+        {error && <p className="auth-error">{error}</p>}
 
         <label className="auth-label">
           Title

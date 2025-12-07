@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useForm from "../../hooks/useForm";
 import useRequest from "../../hooks/useRequest";
@@ -9,6 +9,8 @@ export default function LocationCreate() {
     const { request } = useRequest();
     const { isAdmin } = useContext(UserContext);
 
+    const [error, setError] = useState("")
+
     useEffect(() => {
         if (!isAdmin) {
             navigate("/design");
@@ -16,20 +18,43 @@ export default function LocationCreate() {
     }, [isAdmin, navigate]);
 
     const createLocationHandler = async (values) => {
-        const data = {
-            title: values.title,
-            city: values.city,
-            country: values.country,
-            imageUrl: values.imageUrl.trim(),
-            summaryShort: values.summaryShort,
-            summaryLong: values.summaryLong,
-        };
+
+        setError("");
+
+        const title = values.title.trim();
+        const city = values.city.trim();
+        const country = values.country.trim();
+        const imageUrl = values.imageUrl.trim();
+        const summaryShort = values.summaryShort.trim();
+        const summaryLong = values.summaryLong.trim();
+
+        if (!title || !city || !country || !imageUrl) {
+            setError("Title, city, country and image URL are required.");
+            return;
+        }
+
+        const urlRegex = /^https?:\/\/.+/i;
+        if (!urlRegex.test(imageUrl)) {
+            setError("Image URL must start with http:// or https://");
+            return;
+        }
+
+        if (summaryShort.length < 10) {
+            setError("Short summary must be at least 10 characters.");
+            return;
+        }
+
+        if (summaryLong.length > 500) {
+            setError("Long summary must be less than 500 characters.")
+        }
+
+        const data = { title, city, country, imageUrl, summaryShort, summaryLong, };
 
         try {
             await request("/data/locations", "POST", data);
             navigate("/design");
         } catch (err) {
-            alert(err.message || "Failed to create location");
+            setError(err.message || "Failed to create location");
         }
     };
 
@@ -52,6 +77,8 @@ export default function LocationCreate() {
         <section className="auth-section">
             <form className="auth-form" onSubmit={onSubmit}>
                 <h2 className="auth-title">Add Location</h2>
+
+                {error && <p className="auth-error">{error}</p>}
 
                 <label className="auth-label">
                     Title

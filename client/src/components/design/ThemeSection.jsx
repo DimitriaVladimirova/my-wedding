@@ -63,7 +63,7 @@ export default function ThemeSection({
 
               {isAdmin && (
                 <button
-                  className="color-delete-btn"
+                  className="design-danger-btn"
                   type="button"
                   onClick={() => onDeleteColor(color._id)}
                 >
@@ -102,7 +102,7 @@ export default function ThemeSection({
 
               {isAdmin && (
                 <button
-                  className="color-delete-btn"
+                  className="design-danger-btn"
                   type="button"
                   onClick={() => onDeleteColor(color._id)}
                 >

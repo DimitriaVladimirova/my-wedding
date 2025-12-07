@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
-import { useContext } from "react";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -26,23 +25,33 @@ export default function Register() {
     e.preventDefault();
     setError("");
 
-    if (!values.email || !values.password || !values.rePassword) {
+    const email = values.email.trim();
+    const password = values.password;
+    const rePassword = values.rePassword;
+
+    if (!email || !password || !rePassword) {
       setError("All fields are required!");
       return;
     }
 
-    if (values.password.length < 4) {
-      setError("Password must be at least 4 characters long!");
-      return
+    const emailRegex = /.+@.+\..+/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
     }
 
-    if (values.password !== values.rePassword) {
+    if (password.length < 4) {
+      setError("Password must be at least 4 characters long!");
+      return;
+    }
+
+    if (password !== rePassword) {
       setError("Passwords do not match!");
       return;
     }
 
     try {
-      await registerHandler(values.email.trim(), values.password);
+      await registerHandler(email, password);
       navigate("/");
     } catch (err) {
       setError(err.message || "Registration failed!");

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import useForm from "../../hooks/useForm";
 import useRequest from "../../hooks/useRequest";
@@ -9,6 +9,8 @@ export default function ColorCreate() {
     const { request } = useRequest();
     const { isAdmin } = useContext(UserContext);
 
+    const [error, setError] = useState("")
+
     useEffect(() => {
         if (!isAdmin) {
             navigate("/design");
@@ -16,17 +18,35 @@ export default function ColorCreate() {
     }, [isAdmin, navigate]);
 
     const createColorHandler = async (values) => {
-        const data = {
-            name: values.name,
-            hex: values.hex,
-            shadeType: values.shadeType, // 'dark' or 'light'
-        };
+        setError("");
+
+        const name = values.name.trim();
+        const hex = values.hex.trim();
+        const shadeType = values.shadeType.trim();
+
+        if (!name) {
+            setError("Color name is required.");
+            return;
+        }
+
+        const hexRegex = /^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$/;
+        if (!hexRegex.test(hex)) {
+            setError("Hex code must be in format #RGB or #RRGGBB.");
+            return;
+        }
+
+        if (shadeType !== "dark" && shadeType !== "light") {
+            setError("Shade type must be either dark or light.");
+            return;
+        }
+
+        const data = { name, hex, shadeType, };
 
         try {
             await request("/data/colors", "POST", data);
             navigate("/design");
         } catch (err) {
-            alert(err.message || "Failed to create color");
+            setError(err.message || "Failed to create color");
         }
     };
 
@@ -46,6 +66,8 @@ export default function ColorCreate() {
         <section className="auth-section">
             <form className="auth-form" onSubmit={onSubmit}>
                 <h2 className="auth-title">Add Theme Color</h2>
+
+                {error && <p className="auth-error">{error}</p>}
 
                 <label className="auth-label">
                     Name
