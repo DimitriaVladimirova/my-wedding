@@ -183,7 +183,7 @@ export default function MyWedding() {
             type="button"
             onClick={() => navigate("/design")}
           >
-            Change location
+            {location ? "Change location" : "Choose location"}
           </button>
         </div>
 
@@ -225,7 +225,7 @@ export default function MyWedding() {
             type="button"
             onClick={() => navigate("/design")}
           >
-            Change menus
+            {menus && menus.length > 0 ? "Change menus" : "Choose menus"}
           </button>
         </div>
 
@@ -271,7 +271,7 @@ export default function MyWedding() {
             type="button"
             onClick={() => navigate("/design")}
           >
-            Change colors
+            {darkColor || lightColor ? "Change colors" : "Choose colors"}
           </button>
         </div>
 
