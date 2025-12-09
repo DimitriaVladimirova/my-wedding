@@ -130,7 +130,7 @@ export default function MenuCreate() {
                         className="auth-input"
                         type="number"
                         min="1"
-                        max="300"
+                        max="150"
                         {...register("maxGuests")}
                     />
                 </label>

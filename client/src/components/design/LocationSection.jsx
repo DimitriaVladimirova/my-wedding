@@ -71,7 +71,9 @@ export default function LocationsSection({ locations, isAdmin, isAuthenticated }
                   >
                     {selectedLocationId === loc._id
                       ? "Chosen"
-                      : "Choose this location"}
+                      : selectedLocationId
+                        ? "Change to this location"
+                        : "Choose this location"}
                   </button>
                 )}
               </div>

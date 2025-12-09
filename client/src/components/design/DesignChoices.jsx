@@ -5,12 +5,22 @@ import MenuSection from "./MenuSection";
 import ThemeSection from "./ThemeSection";
 import { UserContext } from "../../context/UserContext";
 import useRequest from "../../hooks/useRequest";
+import { useNavigate } from "react-router";
+import { useWeddingSelection } from "../../context/WeddingSelectionContext";
 
 
 export default function DesignChoices() {
- 
+
+  const navigate = useNavigate();
   const { isAuthenticated, isAdmin } = useContext(UserContext);
   const { request } = useRequest();
+
+  const {
+    selectedLocationId,
+    selectedMenuIds,
+    selectedDarkColorId,
+    selectedLightColorId,
+  } = useWeddingSelection();
 
   const [locations, setLocations] = useState([]);
   const [menus, setMenus] = useState([]);
@@ -91,8 +101,6 @@ export default function DesignChoices() {
     }
   };
 
-
-
   if (loading) {
     return (
       <main className="design-page">
@@ -112,6 +120,13 @@ export default function DesignChoices() {
       </main>
     );
   }
+
+  const hasCompleteSelection =
+    !!selectedLocationId &&
+    selectedMenuIds &&
+    selectedMenuIds.length > 0 &&
+    !!selectedDarkColorId &&
+    !!selectedLightColorId;
 
   return (
     <main className="design-page">
@@ -142,6 +157,25 @@ export default function DesignChoices() {
         isAuthenticated={isAuthenticated}
         onDeleteColor={handleDeleteColor}
       />
+
+      {isAuthenticated && !isAdmin && (
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "2.5rem",
+            marginBottom: "1rem",
+          }}
+        >
+          <button
+            className="design-primary-btn"
+            type="button"
+            disabled={!hasCompleteSelection}
+            onClick={() => navigate("/my-wedding")}
+          >
+            See your selections
+          </button>
+        </div>
+      )}
     </main>
   );
 }

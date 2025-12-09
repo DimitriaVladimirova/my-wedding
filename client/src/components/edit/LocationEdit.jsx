@@ -49,7 +49,8 @@ export default function LocationEdit() {
     }
 
     if (summaryLong.length > 500) {
-      setError("Long summary must be less than 500 characters.")
+      setError("Long summary must be less than 500 characters.");
+      return;
     }
 
     const data = {

@@ -162,7 +162,7 @@ export default function MenuEdit() {
             className="auth-input"
             type="number"
             min="1"
-            max="300"
+            max="150"
             {...register("maxGuests")}
           />
         </label>

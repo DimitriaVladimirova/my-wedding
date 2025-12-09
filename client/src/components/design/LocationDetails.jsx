@@ -127,7 +127,6 @@ export default function LocationDetails() {
           <div className="location-text-block">
             <p className="details-text">
               {location.summaryLong ||
-                location.summary ||
                 location.summaryShort}
             </p>
 
